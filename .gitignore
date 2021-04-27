@@ -6,3 +6,6 @@ npm-debug.log
 
 # Environment Variables should NEVER be published
 .env
+
+# just an example of the product object
+product.js

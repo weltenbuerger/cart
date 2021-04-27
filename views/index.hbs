@@ -1,2 +1,17 @@
-<h1>{{title}} 🚀</h1>
-<p>Welcome Ironhacker!</p>
+{{!-- <h1>{{title}} 🚀</h1> --}}
+{{!-- <p>Welcome Ironhacker!</p> --}}
+
+{{#each products }}
+<div class="feed-product">
+    <a href="/products/{{this.id}}">
+        <img class='feed-image' src="{{this.photos.[1]}}" alt="{{this.title}}">
+    </a>
+    <a href="/product/{{this.id}}">
+        <div class="feed-description">
+            <p class="feed-brand">{{this.product_enums.brand}}</p>
+            <p class="feed-title">{{this.title}}</p>
+            <p class="feed-price">{{this.display_price}}.00 €</p>
+        </div>
+    </a>
+</div>
+{{/each}}

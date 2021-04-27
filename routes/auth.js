@@ -43,8 +43,8 @@ router.post('/register', (req, res, next) => {
 
   // check if all fields are filled
   if (!email || !password || !confirmPassword) {
-    res.render('account', {
-      errorMessage:
+    res.render('login', {
+      registrationErrorMessage:
         '• All fields are mandatory. Please provide your email, password and confirm your password.',
     })
     return
@@ -56,8 +56,8 @@ router.post('/register', (req, res, next) => {
   })(email)
 
   if (!validEmail) {
-    res.render('account', {
-      errorMessage: '• Please provide a valid email address.',
+    res.render('login', {
+      registrationErrorMessage: '• Please provide a valid email address.',
     })
     return
   }
@@ -66,8 +66,8 @@ router.post('/register', (req, res, next) => {
     .then((emailFromDB) => {
       console.log({ emailFromDB })
       if (emailFromDB !== null) {
-        res.render('account', {
-          errorMessage:
+        res.render('login', {
+          registrationErrorMessage:
             '• Email already exists please choose a different email.',
         })
         return
@@ -94,17 +94,22 @@ router.post('/register', (req, res, next) => {
 })
 
 // login with passport
-router.post(
-  '/login',
-  passport.authenticate('local', {
-    successRedirect: '/account',
-    failureRedirect: '/login',
-    passReqToCallback: true,
-  })
-  // (req, res) => {
-  //   console.log('passport user', req.user)
-  // }
-)
+router.post('/login', function (req, res, next) {
+  passport.authenticate('local', function (err, user, info) {
+    if (err) {
+      return next(err)
+    }
+    if (!user) {
+      return res.render('login', { loginErrorMessage: info.message })
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err)
+      }
+      return res.redirect('/account')
+    })
+  })(req, res, next)
+})
 
 // // USE THIS FOR LOGGING ERRORS
 // router.post(
@@ -138,38 +143,10 @@ router.post(
 //   }
 // )
 
-/*
-function (req, res, next) {
-    // call passport authentication passing the "local" strategy name and a callback function
-    passport.authenticate('local', function (error, user, info) {
-      // this will execute in any case, even if a passport strategy will find an error
-      // log everything to console
-      console.log(error);
-      console.log(user);
-      console.log(info);
-
-      if (error) {
-        res.status(401).send(error);
-      } else if (!user) {
-        res.status(401).send(info);
-      } else {
-        next();
-      }
-
-      res.status(401).send(info);
-    })(req, res);
-  },
-
-  // function to call once successfully authenticated
-  function (req, res) {
-    res.status(200).send('logged in!');
-  });
-*/
-
 router.get('/logout', (req, res, next) => {
   // this is a passport function
   req.logout()
-  res.redirect('/')
+  res.redirect('/login')
 })
 
 module.exports = router

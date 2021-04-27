@@ -36,6 +36,15 @@ app.use(
 
 // end of session configuration
 
+// cart session
+app.use((req, res, next) => {
+  // res.locals.login = req.isAuthenticated(); // <- use this to check if user ist logged in or not
+  res.locals.session = req.session
+  // console.log('res.locals.session', res.locals.session)
+  next()
+})
+// end of cart session
+
 // passport configuration
 const User = require('./models/User.model')
 const passport = require('passport')
@@ -67,11 +76,11 @@ passport.use(
     },
 
     (username, password, done) => {
-      console.log({ username })
+      // console.log({ username })
       // attention emai: username
       User.findOne({ email: username })
         .then((dbUser) => {
-          console.log({ dbUser })
+          // console.log({ dbUser })
           if (dbUser === null) {
             // there is no user with this email
             done(null, false, { message: 'Wrong Credentials' })
@@ -103,6 +112,7 @@ const projectName = 'cart'
 const capitalized = (string) =>
   string[0].toUpperCase() + string.slice(1).toLowerCase()
 
+// locals are accessible accross the app
 app.locals.title = `1213bst`
 
 // 👇 Start handling routes here
@@ -111,6 +121,10 @@ app.use('/', index)
 
 const auth = require('./routes/auth')
 app.use('/', auth)
+
+const products = require('./routes/products')
+const { response } = require('express')
+app.use('/', products)
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app)

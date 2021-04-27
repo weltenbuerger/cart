@@ -1,0 +1,18 @@
+<div class="cta-title">cart</div>
+{{#if products }}
+<div class="cart-table">
+    {{#each products }}
+    <div class="cart-row">
+        <div class="title"><strong>{{this.item.product_enums.brand}}</strong> {{this.item.title}}</div>
+        <div class="price">{{this.item.display_price}}.00 €</div>
+        <div class="qty">{{this.qty}}</div>
+        {{!-- <div><a class="subtract" href="/subtract/{{this.item.id}}">subtract</a></div> --}}
+        <div class="remove"><a href="/remove/{{this.item.id}}">remove</a></div>
+    </div>
+    {{/each}}
+</div>
+<div class="total">Total:{{totalPrice}}.00 €</div>
+<a class="link-button button size-4 yellow shadow flat" href="/cart">Checkout</a>
+{{ else }}
+<p>cart is empty</p>
+{{/if}}

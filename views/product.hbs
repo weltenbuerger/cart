@@ -1,0 +1,18 @@
+{{!-- photos --}}
+<div class="product-images">
+    {{#each product.photos}}
+    <img class="product-image" src="{{this}}" alt="{{product.title}}">
+    {{/each}}
+</div>
+
+<div class="product-content">
+    <div class="product-brand">{{product.product_enums.brand}}</div>
+    <div class="product-title">{{product.title}}</div>
+    {{!-- <div class="product-size">size: {{product.product_enums.size.bst_size}}</div> --}}
+    <div class="product-price">price: {{product.display_price}}.00 €</div>
+    <form action="/add-to-cart/{{product.id}}">
+        <input class="add-to-cart-button yellow size-4 flat shadow" type="submit" value="ADD TO CART" />
+    </form>
+    <div class="product-description">{{product.description}}</div>
+    <div class="product-sku">sku: {{product.sku}}</div>
+</div>
