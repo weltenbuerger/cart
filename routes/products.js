@@ -1,7 +1,5 @@
 const router = require('express').Router()
 const { Cart } = require('../models/cart')
-
-// axios
 const axios = require('axios')
 
 const PRODUCT_API_HEADER = {
@@ -13,10 +11,8 @@ const PRODUCT_API_HEADER = {
 
 // get product
 router.get('/products/:id', (req, res, next) => {
-  // console.log(req.params.id)
   const productId = req.params.id
 
-  //   /products?id=33062
   axios
     .get('https://api.1213bst.net/products?id=' + productId, PRODUCT_API_HEADER)
     .then((response) => {
@@ -27,21 +23,6 @@ router.get('/products/:id', (req, res, next) => {
     .catch((err) => {
       next(err)
     })
-
-  //   axios
-  //     .get(
-  //       'https://api.1213bst.net/products?page=1&per_page=5&sort=-created_at',
-  //       PRODUCT_API_HEADER
-  //     )
-  //     .then((response) => {
-  //       console.log(`products: ${response.data.products[0].title}`)
-  //       const products = response.data.products
-  //       res.render('index', { products: products })
-  //     })
-  //     .catch((err) => {
-  //       console.log('error ' + error)
-  //       next(err)
-  //     })
 })
 
 // add to cart
@@ -54,7 +35,6 @@ router.get('/add-to-cart/:id', (req, res, next) => {
     .get('https://api.1213bst.net/products?id=' + productId, PRODUCT_API_HEADER)
     .then((response) => {
       const apiProduct = response.data.products[0]
-      //   console.log({ apiProduct })
       cart.add(apiProduct, apiProduct.id)
       req.session.cart = cart
       console.log(req.session.cart)
@@ -95,7 +75,7 @@ router.get('/cart', (req, res, next) => {
   const cart = new Cart(req.session.cart)
   res.render('cart', {
     products: cart.generateArray(),
-    totalPrice: cart.totalPrice,
+    subtotalPrice: cart.subtotalPrice,
     totalQty: cart.totalQty,
   })
 })

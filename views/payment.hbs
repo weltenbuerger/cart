@@ -1,0 +1,71 @@
+<div class="progress">
+    <img src="progress2.png" alt="shipping">
+</div>
+<form action="/review" method="POST">
+    <div class="block-container">
+        <div class="block">
+            <div class="payment-information">
+                <div class="fields">
+
+                    <div class="cta-title-2">total</div>
+                    <p class="total-row bold">
+                        <span>
+                            subtotal
+                        </span>
+                        <span>
+                            {{cart.subtotalPrice}}.00 €
+                        </span>
+                    </p>
+                    <p class="total-row">
+                        <span>
+                            shipping (standard)
+                        </span>
+                        <span>
+                            {{cart.shippingPrice}}.00 €
+                        </span>
+                    </p>
+                    <p class="total-row">
+                        <span>
+                            discount
+                        </span>
+                        <span>
+                            {{cart.discount}}.00 €
+                        </span>
+                    </p>
+                    <p class="total-row bold">
+                        <span>
+                            total
+                        </span>
+                        <span>
+                            {{cart.totalPrice}}.00 €
+                        </span>
+                    </p>
+                    <p class="total-row">
+                        <span>
+                            1213 trade credit
+                        </span>
+                        <span>
+                            {{cart.tradeCredit}}.00 €
+                        </span>
+                    </p>
+                    <p class="total-row bold">
+                        <span>
+                            you pay
+                        </span>
+                        <span>
+                            {{cart.finalPrice}}.00 €
+                        </span>
+                    </p>
+                    <div class="cta-title-2 choose-payment">choose your payment method</div>
+                    <div class="payment-method">
+                        <img src="demo_paypal_1.png" alt="payment method">
+                    </div>
+                    {{#if paymentErrorMessage}}
+                    <div class="error-message">{{paymentErrorMessage}}</div>
+                    {{/if}}
+                    <button class="button size-4 flat black shadow checkout-button" type="submit">continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

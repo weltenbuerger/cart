@@ -2,7 +2,14 @@ class Cart {
   constructor(oldCart) {
     this.items = oldCart.items || {} // {} if the cart is new then {}
     this.totalQty = oldCart.totalQty || 0 // if the cart is new then 0
-    this.totalPrice = oldCart.totalPrice || 0 // if the cart is new then 0
+    this.subtotalPrice = oldCart.subtotalPrice || 0 // if the cart is new then 0
+    this.shippingPrice = 10
+    this.discount = 10
+    this.totalPrice = this.subtotalPrice + this.shippingPrice - this.discount
+
+    console.log('inside Cart object: ', this.totalPrice)
+    this.tradeCredit = 15
+    this.finalPrice = this.totalPrice - this.tradeCredit
   }
 
   add(item, itemId) {
@@ -14,13 +21,13 @@ class Cart {
     storedItem.qty++
     storedItem.price = storedItem.item.display_price * storedItem.qty
     this.totalQty++
-    this.totalPrice += storedItem.item.display_price
+    this.subtotalPrice += storedItem.item.display_price
   }
   subtract(itemId) {
     this.items[itemId].qty--
     this.items[itemId].price -= this.items[itemId].item.display_price
     this.totalQty--
-    this.totalPrice -= this.items[itemId].item.display_price
+    this.subtotalPrice -= this.items[itemId].item.display_price
 
     if (this.items[itemId].qty <= 0) {
       delete this.items[itemId]
@@ -29,7 +36,7 @@ class Cart {
 
   remove(itemId) {
     this.totalQty -= this.items[itemId].qty
-    this.totalPrice -= this.items[itemId].price
+    this.subtotalPrice -= this.items[itemId].price
     delete this.items[itemId]
   }
 

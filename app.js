@@ -14,6 +14,9 @@ const express = require('express')
 const hbs = require('hbs')
 
 const app = express()
+
+app.use(express.static('public/images'))
+
 // app.use(express.bodyParser())
 
 // Session Configuration
@@ -40,7 +43,6 @@ app.use(
 app.use((req, res, next) => {
   // res.locals.login = req.isAuthenticated(); // <- use this to check if user ist logged in or not
   res.locals.session = req.session
-  // console.log('res.locals.session', res.locals.session)
   next()
 })
 // end of cart session
@@ -119,12 +121,17 @@ app.locals.title = `1213bst`
 const index = require('./routes/index')
 app.use('/', index)
 
+// registration, authentication, login ... all things auth
 const auth = require('./routes/auth')
 app.use('/', auth)
 
+// handles products and cart
 const products = require('./routes/products')
 const { response } = require('express')
 app.use('/', products)
+
+const checkout = require('./routes/checkout')
+app.use('/', checkout)
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app)

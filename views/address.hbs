@@ -1,0 +1,48 @@
+<div class="progress">
+    <img src="progress1.png" alt="shipping">
+</div>
+<form action="/payment" method="POST">
+    <div class="block-container">
+        <div class="block labeled">
+            <div class="shipping-address">
+                <div class="cta-title-2">shipping address</div>
+                <div class="fields">
+
+                    <label class="input-label" for="country">country</label>
+                    <input type="text" id="country" name="country" required>
+                    <label class="input-label" for="firstName">first name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                    <label class="input-label" for="lastName">last name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                    <label class="input-label" for="company">company (optional)</label>
+                    <input type="text" id="company" name="company">
+                    <label class="input-label" for="street">street</label>
+                    <input type="text" id="street" name="street" required>
+                    <label class="input-label" for="apt">apt#</label>
+                    <input type="text" id="apt" name="apt" required>
+                    <label class="input-label" for="postalcode">postal code</label>
+                    <input type="text" id="postalcode" name="postalcode" required>
+                    <div class="check">
+                        <input type="checkbox" id="check_sign_in" name="check_sign_in" value="true" checked>
+                        <label for="check_sign_in"> billing and shipping address are the same</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="block labeled">
+            <div class="cta-title-2">contact details</div>
+            <div class="small-text">we will use these details to update you on your order</div>
+            <div class="fields">
+                <label class="input-label" for="phone">phone (optional)</label>
+                <input type="text" id="phone" name="phone">
+                <label class="input-label" for="email">email</label>
+                <input type="text" id="email" name="email" value="{{userSession.email}}">
+                {{#if addressErrorMessage}}
+                <div class="error-message">{{addressErrorMessage}}</div>
+                {{/if}}
+            </div>
+        </div>
+        <button class="button size-4 flat black shadow checkout-button" type="submit">continue to payment</button>
+    </div>
+</form>
