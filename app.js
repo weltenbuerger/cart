@@ -23,7 +23,7 @@ app.use(express.static('public/images'))
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const mongoose = require('./db/index')
-const DB_URL = 'mongodb://localhost/passport'
+const DB_URL = process.env.MONGODB_URI // 'mongodb://localhost/passport'
 
 app.use(
   session({
